@@ -1,0 +1,64 @@
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Order</th>
+      <th>Tot. Sheets</th>
+      <th>Sheet Type</th>
+      <th>Start date</th>
+      <th>Finishing date</th>
+      <% if current_user.roles.where(name: ["Super Admin", "Admin"]).any? %>
+        <th># of notes</th>
+      <% end %>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><%= @order.name%></td>
+      <td><%= @order.no_of_sheets %></td>
+      <td><%= @order.sheet_type %></td>
+      <td><%= @order.from_date.class %></td>
+      <td><%= @order.to_date %></td>
+      <% if current_user.roles.where(name: ["Super Admin", "Admin"]).any? %>
+        <td><%= @order.notes.count%></td>
+      <% end %>
+    </tr>
+  </tbody>
+</table>
+<div>
+<% if current_user.roles.where(name: ["Super Admin", "Admin"]).any? %>
+  <% if @notes.present? %>
+    <div class="panel-heading">
+      <h3>Notes</h3>
+      <table class="table table-striped">
+        <thead>
+          <th>Posted By</th>
+          <th>Message</th>
+        </thead>
+        <tbody>
+          <% @notes.each do |note| %>
+            <tr>
+              <td style="width:16%;background-color: lightgray;"><%= note.user.username %>: </td>
+              <td><%= note.message %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% else %>
+    <p class="flash-msg">No Message Found.</p>
+  <% end %>
+<% end %>
+</div>
+<div class="clearfooter"></div>
+</div>
+
+
+<style type="text/css">
+  p.flash-msg {
+    background-color : #fff1ab;
+    padding : 5px;
+    font-weight: bold;
+    border:1px solid #EFDF95 ;
+    text-align : center;
+  }  
+</style>
