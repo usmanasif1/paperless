@@ -26,8 +26,8 @@ role.role_id = Role.find_by_name('Admin').id
 role.save!
 
 user = User.create!({
-   :username=>"Ittsel",
-   :email=>"ittsel.ali@devsinc.com",
+   :username=>"Usman Asif",
+   :email=>"usman.asif@devsinc.com",
    :password=>"admin123",
    :password_confirmation=>"admin123",
 })
