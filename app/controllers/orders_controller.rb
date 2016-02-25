@@ -40,7 +40,8 @@ class OrdersController < ApplicationController
 	    role.save!
 			order = user.orders.build(params[:order])
 			order.save!
-			File.dirname("#{Rails.root}/public/uploads/#{user.email}") unless File.directory?("#{Rails.root}/public/#{user.email}")
+    		Dir.mkdir("#{Rails.root}/public/uploads/#{user.email}") unless File.exists?("#{Rails.root}/public/uploads/#{user.email}")
+			# File.dirname("#{Rails.root}/public/uploads/#{user.email}") unless File.directory?("#{Rails.root}/public/#{user.email}")
 			user.send_reset_password_instructions
 			Delayed::Job.enqueue SendEmailsJob.new(order)
 			flash[:success]  = "Successfully submitted. Please check your email."

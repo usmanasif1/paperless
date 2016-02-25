@@ -31,7 +31,7 @@
         <td>
           <% if current_user.roles.where(name: ["Super Admin", "Admin"]).any? %>
             <%= link_to "Add Note", "javascript:void(0)", class: "btn btn-mini btn-sm btn-success open_modal", id: "#{order.id}"%>
-            <%= link_to "Upload zip", new_order_zip_uploader_path(order), class: "btn btn-mini btn-sm btn-warning"%>
+            <%#= link_to "Upload zip", new_order_zip_uploader_path(order), class: "btn btn-mini btn-sm btn-warning"%>
             <%= link_to("Delete order", order_path(order), :data => { :confirm => "Are you sure?" }, :method => :delete, :class => 'btn btn-mini btn-sm btn-danger') %>
           <% else %>
           <%= link_to 'Edit', edit_order_path(order), class: "btn btn-mini btn-sm btn-primary"%>
