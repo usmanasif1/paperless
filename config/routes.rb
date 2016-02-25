@@ -13,6 +13,7 @@ PaperLess::Application.routes.draw do
   		post 'guest_order'
   	end
   	resources :notes
+    resources :zip_uploaders
   end
   resources :notes
 

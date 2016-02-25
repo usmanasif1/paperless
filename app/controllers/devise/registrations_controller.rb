@@ -19,6 +19,9 @@ class Devise::RegistrationsController < DeviseController
     role.role_id = Role.find_by_name('User').id
     role.save!
 
+    Dir.mkdir("#{Rails.root}/public/uploads/#{resource.email}") unless File.exists?("#{Rails.root}/public/uploads/#{resource.email}")
+    # File.dirname("#{Rails.root}/public/uploads/#{resource.email}") unless File.directory?("#{Rails.root}/public/#{resource.email}")
+
     yield resource if block_given?
     if resource.persisted?
       if resource.active_for_authentication?

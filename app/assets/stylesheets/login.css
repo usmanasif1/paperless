@@ -8,7 +8,17 @@ body {
     font-family:sans-serif;
     margin: 0;
 }
-
+.registration_form_css{
+    border: 1px solid;
+    border-color: lightgray;
+    margin: 0 auto;
+    width: 61%;
+    padding-left: 32px;
+    padding-top: 28px;
+    padding-right: 32px;
+    padding-bottom: 10px;
+}
+}
 #top_logo {
     margin:0 auto;
     padding-top:15px;

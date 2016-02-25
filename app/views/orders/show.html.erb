@@ -1,3 +1,5 @@
+<h3>Order Detail</h3>
+<hr size="3">
 <table class="table table-striped">
   <thead>
     <tr>
@@ -6,7 +8,7 @@
       <th>Sheet Type</th>
       <th>Start date</th>
       <th>Finishing date</th>
-      <% if current_user.roles.where(name: ["Super Admin", "Admin"]).any? %>
+      <% if current_user && current_user.roles.where(name: ["Super Admin", "Admin"]).any? %>
         <th># of notes</th>
       <% end %>
     </tr>
@@ -18,31 +20,35 @@
       <td><%= @order.sheet_type %></td>
       <td><%= @order.from_date.class %></td>
       <td><%= @order.to_date %></td>
-      <% if current_user.roles.where(name: ["Super Admin", "Admin"]).any? %>
+      <% if current_user && current_user.roles.where(name: ["Super Admin", "Admin"]).any? %>
         <td><%= @order.notes.count%></td>
       <% end %>
     </tr>
   </tbody>
 </table>
 <div>
-<% if current_user.roles.where(name: ["Super Admin", "Admin"]).any? %>
+<% if current_user && current_user.roles.where(name: ["Super Admin", "Admin"]).any? %>
   <% if @notes.present? %>
-    <div class="panel-heading">
-      <h3>Notes</h3>
-      <table class="table table-striped">
-        <thead>
-          <th>Posted By</th>
-          <th>Message</th>
-        </thead>
-        <tbody>
-          <% @notes.each do |note| %>
-            <tr>
-              <td style="width:16%;background-color: lightgray;"><%= note.user.username %>: </td>
-              <td><%= note.message %></td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3>Notes</h3>
+      </div>
+      <div class="panel-body">  
+        <table class="table table-striped">
+          <thead>
+            <th>Posted By</th>
+            <th>Message</th>
+          </thead>
+          <tbody>
+            <% @notes.each do |note| %>
+              <tr>
+                <td style="width:16%;background-color: lightgray;"><%= note.user.username %>: </td>
+                <td><%= note.message %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
     </div>
   <% else %>
     <p class="flash-msg">No Message Found.</p>

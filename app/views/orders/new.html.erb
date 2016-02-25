@@ -1,6 +1,7 @@
 <%= stylesheet_link_tag "bootstrap-datepicker3" %>
 <%= javascript_include_tag 'bootstrap-datepicker', 'date_format'%> 
 <h3>Post Order</h3>
+<hr size="5"> 
 <div style="margin-left: 15%; width:60%;">
   <%= simple_form_for(@order, :html => {:class => 'form-horizontal' }) do |f| %>
     <div class="form-group">
@@ -39,7 +40,7 @@
     </div>
 
     <div class="form-group"> 
-      <div class="col-sm-offset-10">
+      <div style="margin-left: 19%;">
         <button type="submit" class="btn btn-primary">Submit</button>
       </div>
     </div>

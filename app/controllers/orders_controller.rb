@@ -15,6 +15,7 @@ class OrdersController < ApplicationController
 	def create
 		@order = current_user.orders.build(params[:order])
 		if @order.save
+			Delayed::Job.enqueue SendEmailsJob.new(@order)
 			flash[:success] = "Successfully submitted."
 			redirect_to orders_path
 		else
@@ -29,7 +30,6 @@ class OrdersController < ApplicationController
 	end
 
 	def guest_order
-		user = User.find(4)
 		user = User.new
 		user.email = params[:order][:email]
 		user.phone = params[:order][:phone]
@@ -40,7 +40,9 @@ class OrdersController < ApplicationController
 	    role.save!
 			order = user.orders.build(params[:order])
 			order.save!
+			File.dirname("#{Rails.root}/public/uploads/#{user.email}") unless File.directory?("#{Rails.root}/public/#{user.email}")
 			user.send_reset_password_instructions
+			Delayed::Job.enqueue SendEmailsJob.new(order)
 			flash[:success]  = "Successfully submitted. Please check your email."
 			redirect_to root_url
 		else

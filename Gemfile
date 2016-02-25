@@ -4,14 +4,12 @@ gem 'rails', '3.2.14'
 
 gem 'heroku'
 gem 'american_date'
-# # gem 'bootstrap-datepicker-rails'
-# gem 'bootstrap-datepicker-rails'
-# gem 'bootstrap-datepicker-rails', :require => 'bootstrap-datepicker-rails',
-                              # :git => 'git://github.com/Nerian/bootstrap-datepicker-rails.git'
-# gem 'activerecord-mysql2-adapter'
+
 gem 'will_paginate', '~> 3.0.5'
 gem 'pundit'
-# gem 'rvm-capistrano',  require: false
+gem 'delayed_job_active_record'
+gem 'rubyzip', '>= 1.1.0' # will load new rubyzip version
+
 group :production do
    gem 'pg'
 end
@@ -52,3 +50,7 @@ group :test do
   gem 'email_spec'
   #gem 'launchy'
 end
+
+gem 'rmagick'
+gem 'fog'
+gem 'carrierwave'

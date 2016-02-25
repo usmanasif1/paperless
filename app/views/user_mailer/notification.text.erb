@@ -1,0 +1,8 @@
+Order Notification
+===============================
+
+Dear <%= @user.username || @user.email %>,
+
+Please, click the link below to check the order details:
+
+<%= order_url(@order) %>

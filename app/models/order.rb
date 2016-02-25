@@ -3,6 +3,7 @@ class Order < ActiveRecord::Base
   attr_accessor :email, :phone
   belongs_to :user
   has_many :notes
+  has_many :zip_uploaders
 
   validates :from_date, presence: true 
   validates :to_date, presence: true 
