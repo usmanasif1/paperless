@@ -1,4 +1,4 @@
-class UserPolicy
+class NotePolicy
   attr_reader :current_user, :record
 
   def initialize(current_user, record)
@@ -6,11 +6,7 @@ class UserPolicy
     @user = record
   end
 
-  def index?
-    @current_user.roles.where(name: ["Super Admin", "Admin"]).any?
-  end
-
-  def update?
+  def new?
     @current_user.roles.where(name: ["Super Admin", "Admin"]).any?
   end
 end

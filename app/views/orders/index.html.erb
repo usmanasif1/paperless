@@ -11,8 +11,9 @@
         <th>Sheet Type</th>
         <th>Start date</th>
         <th>Finishing date</th>
+        <th># of Files</th>
         <% if current_user.roles.where(name: ["Super Admin", "Admin"]).any? %>
-          <th># of notes</th>
+          <th># of Notes</th>
         <% end %>
         <th>Action</th>
       </tr>
@@ -25,17 +26,20 @@
         <td><%= order.sheet_type %></td>
         <td><%= order.from_date.class %></td>
         <td><%= order.to_date %></td>
+        <td><%= order.try(:zip_uploaders).try(:count) %></td>
         <% if current_user.roles.where(name: ["Super Admin", "Admin"]).any? %>
           <td><%= order.notes.count%></td>
         <% end %>
         <td>
+          <%= link_to "View files", files_order_zip_uploaders_path(order), class: "btn btn-sm btn-mini btn-primary"%>
           <% if current_user.roles.where(name: ["Super Admin", "Admin"]).any? %>
             <%= link_to "Add Note", "javascript:void(0)", class: "btn btn-mini btn-sm btn-success open_modal", id: "#{order.id}"%>
-            <%#= link_to "Upload zip", new_order_zip_uploader_path(order), class: "btn btn-mini btn-sm btn-warning"%>
+            <%= link_to "Upload zip", new_order_zip_uploader_path(order), class: "btn btn-mini btn-sm btn-warning"%>
             <%= link_to("Delete order", order_path(order), :data => { :confirm => "Are you sure?" }, :method => :delete, :class => 'btn btn-mini btn-sm btn-danger') %>
           <% else %>
           <%= link_to 'Edit', edit_order_path(order), class: "btn btn-mini btn-sm btn-primary"%>
-          <% end %>  
+          <% end %>
+
         </td>
       </tr>
     <% end %>

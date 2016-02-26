@@ -7,18 +7,19 @@ class ZipUploadersController < ApplicationController
 	end
 
 	def create
-		puts "999"*90
-		puts params[:zip_uploader]
-		puts "00"*90
 		order  = Order.find(params[:order_id])
 		@zip = order.zip_uploaders.build(params[:zip_uploader])
-		# zip = params[:zip_uploader][:zip]
-		# .original_filename
-    # ext = File.extname(zip)
-    # file_name = "#{File.basename(zip, ext).parameterize}_#{Time.now.to_i}#{ext}"
-    # @zip.zip = file_name
     if @zip.save
+    	flash[:success]  ="successfully uploaded"
+    	redirect_to orders_path
     else
+    	flash[:danger] = "Something went wrong."
+    	redirect_to :back
     end
+	end
+
+	def files
+		@order = Order.find(params[:order_id])
+		@zip_uploaders  = @order.zip_uploaders
 	end
 end

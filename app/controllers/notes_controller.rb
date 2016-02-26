@@ -11,4 +11,8 @@ class NotesController < ApplicationController
 		end
 		redirect_to orders_path
 	end
+
+	def new
+		authorize :note
+	end
 end

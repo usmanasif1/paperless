@@ -6,14 +6,14 @@ class ZipFileUploader < CarrierWave::Uploader::Base
   # include CarrierWave::RMagick
   # include CarrierWave::MiniMagick
   # Choose what kind of storage to use for this uploader:
-  storage :file
-  # storage :fog
-
+  # storage :file
+  storage :fog
+  # storage :dropbox
   # Override the directory where uploaded files will be stored.
   # This is a sensible default for uploaders that are meant to be mounted:
   def store_dir
     puts "888"*90
-    puts model.order.user.email
+    # puts model.order.user.email
     # "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
     "uploads/#{model.order.user.email}/#{model.id}"
   end

@@ -1,40 +1,36 @@
 <div id="wrapper">
-  <div id="top_logo">
-    <%#= image_tag current_school_detail.logo.url %>
-  </div>
-
-  <div id="login_area_bg" style="margin-top:13%;">
-
-    <%= simple_form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => {:class => 'form-vertical' }) do |f| %>
-
-      <div id="login_area" style="margin-top: -12%;">
-        <label for="email"><%= 'Email' %></label>
-        <div id="username_textbox_bg">
-          <%= f.text_field :email%>
+  <h3 style="text-align: center;padding-bottom: 18px;">Sign In</h3>
+  <div id="login_area_bg">
+    <div class="registration_form_css">
+      <%= simple_form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => {:class => 'form-horizontal' }) do |f| %>
+        <div class="form-group">
+          <label class="control-label col-sm-2" for="email">Email:</label>
+          <div class="col-sm-10">
+            <%#= f.input :email, :required => true %>
+            <%= f.text_field :email, class: "form-control", :required => true%>
+          </div>
         </div>
 
-        <label for="password"><%= 'Password' %></label>
-        <div id="password_textbox_bg">
-          <%= f.password_field :password %>
+        <div class="form-group">
+          <label class="control-label col-sm-2" for="email">Password:</label>
+          <div class="col-sm-10">
+            <%= f.password_field :password, class: "form-control"%>
+          </div>
         </div>
 
-        <div id="notice-box">
-          <% if !flash.empty? %>
-            <div id="notice"><%= flash[:notice] %></div>
-          <% end %>
+        <div class="form-group"> 
+          <div style="margin-left: 19%;">
+            <%= f.button :submit, "Sign in", :class => 'btn-primary' %>
+          </div>
         </div>
-
-        <div id="submit_area">
-          <%= f.button :submit, "Sign in", :class => 'submit' %>
-          <%#= submit_tag t('login'), :class => "submit" %>
+        <div class="form-group">
+          <div class="col-sm-10">
+            <%= render "devise/shared/links" %>
+          </div>
         </div>
+      <% end %>
+    </div>
 
-        <label for="forgot_password" class="forgot_password_link">
-            <%= link_to "Sign up", new_registration_path(resource_name) %><br />
-            <%= link_to "forgot password?", new_password_path(resource_name) %>
-        </label>
-      </div>
-    <% end %>
   </div>
   <div id="help_forgot_pw">
   </div>
@@ -54,4 +50,9 @@
   document.getElementById('user_email').focus();
 </script>
 
-<%#= render "devise/shared/links" %>
+
+
+<!--  <label for="forgot_password" class="forgot_password_link">
+    <%#= link_to "Sign up", new_registration_path(resource_name) %><br />
+    <%#= link_to "forgot password?", new_password_path(resource_name) %>
+</label> -->

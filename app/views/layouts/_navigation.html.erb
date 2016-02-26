@@ -1,6 +1,9 @@
-<%#= link_to "PaperLess", "javascript:void(0)", :class => 'brand' %>
+<%#= link_to "PaperLess", root_url, :class => 'brand' %>
   <% if user_signed_in? %>
     <ul class="nav navbar-nav">
+      <li>
+        <%= link_to 'users', users_path %>
+      </li>
       <li>
         <%= link_to 'Orders', orders_path %>
       </li>

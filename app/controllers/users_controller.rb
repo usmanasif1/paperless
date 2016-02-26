@@ -2,12 +2,12 @@ class UsersController < ApplicationController
  before_filter :authenticate_user!
 
   def index
-    # authorize current_user
-    if current_user && current_user.roles.where(name: ["User"]).any?
-      redirect_to root_url
-    else
+    authorize current_user
+    # if current_user && current_user.roles.where(name: ["User"]).any?
+      # redirect_to root_url
+    # else
       @users = User.all
-    end
+    # end
   end
 
   def show
@@ -18,7 +18,10 @@ class UsersController < ApplicationController
     # authorize! :update, @user, :message => 'Not authorized as an administrator.'
     authorize current_user
     @user = User.find(params[:id])
-    if @user.update_attributes(params[:user], :as => :admin)
+    # if @user.update_attributes(params[:user], :as => :admin)
+    user_role = @user.user_roles.first
+    user_role.role_id = params[:user][:role_ids].to_i
+    if user_role.save
       redirect_to users_path, :notice => "User updated."
     else
       redirect_to users_path, :alert => "Unable to update user."

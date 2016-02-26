@@ -15,6 +15,7 @@ class OrdersController < ApplicationController
 	def create
 		@order = current_user.orders.build(params[:order])
 		if @order.save
+			# id = @order.id
 			Delayed::Job.enqueue SendEmailsJob.new(@order)
 			flash[:success] = "Successfully submitted."
 			redirect_to orders_path
@@ -40,7 +41,7 @@ class OrdersController < ApplicationController
 	    role.save!
 			order = user.orders.build(params[:order])
 			order.save!
-    		Dir.mkdir("#{Rails.root}/public/#{user.email}") unless File.exists?("#{Rails.root}/public/#{user.email}")
+    	# Dir.mkdir("#{Rails.root}/public/#{user.email}") unless File.exists?("#{Rails.root}/public/#{user.email}")
 			# File.dirname("#{Rails.root}/public/uploads/#{user.email}") unless File.directory?("#{Rails.root}/public/#{user.email}")
 			user.send_reset_password_instructions
 			Delayed::Job.enqueue SendEmailsJob.new(order)

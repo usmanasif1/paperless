@@ -1,7 +1,7 @@
 class Devise::RegistrationsController < DeviseController
   prepend_before_filter :require_no_authentication, only: [:new, :create, :cancel]
   prepend_before_filter :authenticate_scope!, only: [:edit, :update, :destroy]
-
+  
   # GET /resource/sign_up
   def new
     build_resource({})
@@ -19,7 +19,7 @@ class Devise::RegistrationsController < DeviseController
     role.role_id = Role.find_by_name('User').id
     role.save!
 
-    Dir.mkdir("#{Rails.root}/public/#{resource.email}") unless File.exists?("#{Rails.root}/public/#{resource.email}")
+    # Dir.mkdir("#{Rails.root}/public/#{resource.email}") unless File.exists?("#{Rails.root}/public/#{resource.email}")
     # File.dirname("#{Rails.root}/public/uploads/#{resource.email}") unless File.directory?("#{Rails.root}/public/#{resource.email}")
 
     yield resource if block_given?

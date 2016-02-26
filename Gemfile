@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-# ruby '2.1.0'
+ruby '2.1.7'
 gem 'rails', '3.2.14'
 
 gem 'heroku'
@@ -9,7 +9,7 @@ gem 'will_paginate', '~> 3.0.5'
 gem 'pundit'
 gem 'delayed_job_active_record'
 gem 'rubyzip', '>= 1.1.0' # will load new rubyzip version
-
+# gem 'test-unit'
 group :production do
    gem 'pg'
 end
@@ -54,3 +54,4 @@ end
 gem 'rmagick'
 gem 'fog'
 gem 'carrierwave'
+gem 'carrierwave-dropbox'

@@ -22,7 +22,7 @@ class ApplicationController < ActionController::Base
     private
 
   def user_not_authorized
-    flash[:warning] = "Access denied."
+    flash[:danger] = "Access denied."
     redirect_to (request.referrer || root_url)
   end
 
