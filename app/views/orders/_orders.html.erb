@@ -1,0 +1,35 @@
+<h3>Orders</h3>
+<% if orders.present? %>
+  <table class="table table-condensed">
+    <thead>
+      <tr>
+        <th>Order</th>
+        <th>Tot. Sheets</th>
+        <th>Sheet Type</th>
+        <th>Start date</th>
+        <th>Finishing date</th>
+        <th># of Files</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+    <% orders.each do |order| %>
+      <tr>
+        <td><%= link_to order.name, order_path(order) %></td>
+        <td><%= order.no_of_sheets %></td>
+        <td><%= order.sheet_type %></td>
+        <td><%= order.from_date.class %></td>
+        <td><%= order.to_date %></td>
+        <td><%= order.try(:zip_uploaders).try(:count) %></td>
+        <td>
+          <%= link_to "View files", files_order_zip_uploaders_path(order), class: "btn btn-sm btn-mini btn-primary"%>
+          <%= link_to 'Edit', edit_order_path(order), class: "btn btn-mini btn-sm btn-primary"%>
+          <%= link_to("Delete order", order_path(order), :data => { :confirm => "Are you sure?" }, :method => :delete, :class => 'btn btn-mini btn-sm btn-danger disabled') %>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+<% else %>
+ <p class="flash-msg">No Order Found.<%= link_to "Click Here to post", new_order_path%></p>
+<% end %>

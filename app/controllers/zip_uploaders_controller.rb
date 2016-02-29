@@ -20,6 +20,12 @@ class ZipUploadersController < ApplicationController
 
 	def files
 		@order = Order.find(params[:order_id])
-		@zip_uploaders  = @order.zip_uploaders
+		@files  = @order.zip_uploaders
 	end
+
+	# def download
+	# 	file = ZipUploader.find(params[:id])
+	# 	send_file file.zip_url
+	# 	redirect_to request.referrer
+	# end
 end

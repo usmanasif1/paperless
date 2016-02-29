@@ -1,5 +1,5 @@
 <h3>Order Detail</h3>
-<hr size="3">
+<%= link_to "Add Note", "javascript:void(0)", class: "btn btn-mini btn-sm btn-success pull-right open_modal", id: "#{@order.id}" if current_user.roles.where(name: ["Super Admin", "Admin"]).any? %>
 <table class="table table-striped">
   <thead>
     <tr>
@@ -8,7 +8,7 @@
       <th>Sheet Type</th>
       <th>Start date</th>
       <th>Finishing date</th>
-      <% if current_user && current_user.roles.where(name: ["Super Admin", "Admin"]).any? %>
+      <% if @admin %>
         <th># of notes</th>
       <% end %>
     </tr>
@@ -20,18 +20,18 @@
       <td><%= @order.sheet_type %></td>
       <td><%= @order.from_date.class %></td>
       <td><%= @order.to_date %></td>
-      <% if current_user && current_user.roles.where(name: ["Super Admin", "Admin"]).any? %>
+      <% if @admin %>
         <td><%= @order.notes.count%></td>
       <% end %>
     </tr>
   </tbody>
 </table>
 <div>
-<% if current_user && current_user.roles.where(name: ["Super Admin", "Admin"]).any? %>
+<% if @admin %>
   <% if @notes.present? %>
     <div class="panel panel-primary">
       <div class="panel-heading">
-        <h3>Notes</h3>
+        Notes
       </div>
       <div class="panel-body">  
         <table class="table table-striped">
@@ -57,14 +57,4 @@
 </div>
 <div class="clearfooter"></div>
 </div>
-
-
-<style type="text/css">
-  p.flash-msg {
-    background-color : #fff1ab;
-    padding : 5px;
-    font-weight: bold;
-    border:1px solid #EFDF95 ;
-    text-align : center;
-  }  
-</style>
+<%= render "shared/popup" %>

@@ -19,14 +19,13 @@ class Devise::RegistrationsController < DeviseController
     role.role_id = Role.find_by_name('User').id
     role.save!
 
-    # Dir.mkdir("#{Rails.root}/public/#{resource.email}") unless File.exists?("#{Rails.root}/public/#{resource.email}")
-    # File.dirname("#{Rails.root}/public/uploads/#{resource.email}") unless File.directory?("#{Rails.root}/public/#{resource.email}")
-
     yield resource if block_given?
     if resource.persisted?
       if resource.active_for_authentication?
         # set_flash_message :notice, :signed_up if is_flashing_format?
-        # sign_up(resource_name, resource)
+        if !cookies[:login_user_as_guest].present?
+          sign_up(resource_name, resource)
+        end
         respond_with resource, location: after_sign_up_path_for(resource)
       else
         set_flash_message :notice, :"signed_up_but_#{resource.inactive_message}" if is_flashing_format?

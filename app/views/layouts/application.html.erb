@@ -23,7 +23,11 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </button>
-              <a class="navbar-brand" href="/">PaperLess</a>
+              <% if current_user && current_user.roles.where(name: ["Super Admin", "Admin"]).any? %>
+                <%= link_to "PaperLess", users_path, class: "navbar-brand"%>
+              <% else %>
+                <%= link_to "PaperLess", orders_path, class: "navbar-brand"%>
+              <% end %>
             </div>
 
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">

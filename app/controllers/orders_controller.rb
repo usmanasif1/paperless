@@ -1,8 +1,10 @@
 class OrdersController < ApplicationController
-
+	before_filter :authenticate_user!, only: [:index, :show, :create, :edit, :update]
+	
 	def index
-		if current_user.roles.where(name: ["Super Admin", "Admin"]).any?
-			@orders = Order.all
+		if params[:user_id].present?
+			@user  = User.find(params[:user_id])
+			@orders = @user.orders
 		else
 			@orders = current_user.orders
 		end
@@ -15,7 +17,6 @@ class OrdersController < ApplicationController
 	def create
 		@order = current_user.orders.build(params[:order])
 		if @order.save
-			# id = @order.id
 			Delayed::Job.enqueue SendEmailsJob.new(@order)
 			flash[:success] = "Successfully submitted."
 			redirect_to orders_path
@@ -28,6 +29,21 @@ class OrdersController < ApplicationController
 	def show
 		@order = Order.find(params[:id])
 		@notes = @order.notes.order('created_at DESC').includes(:user)
+		if current_user.roles.where(name: ["Super Admin", "Admin"]).any?
+			@admin = true
+		end	
+	end
+
+	def edit
+		@order = Order.find(params[:id])
+	end
+
+
+	def update
+		order = Order.find(params[:id])
+		order.update_attributes(params[:order])
+		flash[:success] = "Successfully updated."
+		redirect_to orders_path
 	end
 
 	def guest_order
@@ -35,16 +51,17 @@ class OrdersController < ApplicationController
 		user.email = params[:order][:email]
 		user.phone = params[:order][:phone]
 		user.password = rand(999999999)
+		# cookie used only for the guest user. because there are two ways to signup. 1. signup   2. while posting order as guest then automatically new user regisered and sent an email for reset password if he/she want to continue. at this time no need to sign in.
+		cookies[:login_user_as_guest] = "yes"
 		if user.save
 			role = user.user_roles.build
 	    role.role_id = Role.find_by_name('User').id
 	    role.save!
 			order = user.orders.build(params[:order])
 			order.save!
-    	# Dir.mkdir("#{Rails.root}/public/#{user.email}") unless File.exists?("#{Rails.root}/public/#{user.email}")
-			# File.dirname("#{Rails.root}/public/uploads/#{user.email}") unless File.directory?("#{Rails.root}/public/#{user.email}")
 			user.send_reset_password_instructions
-			Delayed::Job.enqueue SendEmailsJob.new(order)
+      cookies.delete :login_user_as_guest
+			# Delayed::Job.enqueue SendEmailsJob.new(order)
 			flash[:success]  = "Successfully submitted. Please check your email."
 			redirect_to root_url
 		else

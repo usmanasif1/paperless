@@ -1,6 +1,7 @@
+<%= stylesheet_link_tag "bootstrap-datepicker3" %>
+<%= javascript_include_tag 'bootstrap-datepicker', 'date_format'%> 
 <h3>Place Order Here...</h3>
-<br/>
-<br/>
+
 <div style="margin-left: 15%; width:60%;">
   <%= simple_form_for(Order.new,url: guest_order_orders_path, method: :post, :html => {:class => 'form-horizontal' }) do |f| %>
         <div class="form-group">

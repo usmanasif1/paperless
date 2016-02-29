@@ -4,7 +4,6 @@ $(document).ready(function(){
 	   autoclose: true,
 	});
 
-
   $('#month_year').datepicker({
 		format: "mm-yyyy",
 	    viewMode: "months",

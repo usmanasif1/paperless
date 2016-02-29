@@ -9,7 +9,7 @@ class NotesController < ApplicationController
 			note.save!
 			flash[:success] = "Successfully submitted."
 		end
-		redirect_to orders_path
+		redirect_to request.referrer
 	end
 
 	def new

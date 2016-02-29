@@ -3,11 +3,7 @@ class UsersController < ApplicationController
 
   def index
     authorize current_user
-    # if current_user && current_user.roles.where(name: ["User"]).any?
-      # redirect_to root_url
-    # else
-      @users = User.all
-    # end
+    @users = User.all
   end
 
   def show

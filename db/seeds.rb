@@ -15,7 +15,7 @@ end
 # role.save!
 
 user = User.create!({
-   :username=>"Faisal",
+   :username=>"Faisal Admin",
    :email=>"faisal.bhatti@devsinc.com",
    :password=>"admin123",
    :password_confirmation=>"admin123",

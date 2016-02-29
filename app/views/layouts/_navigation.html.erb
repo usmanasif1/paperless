@@ -2,10 +2,11 @@
   <% if user_signed_in? %>
     <ul class="nav navbar-nav">
       <li>
-        <%= link_to 'users', users_path %>
-      </li>
-      <li>
-        <%= link_to 'Orders', orders_path %>
+        <% if current_user && current_user.roles.where(name: ["Super Admin", "Admin"]).any? %>
+          <%= link_to 'users', users_path %>
+        <% else %>
+          <%= link_to 'Orders', orders_path %>
+        <% end %>
       </li>
     </ul>
     <ul class="nav navbar-nav navbar-right">

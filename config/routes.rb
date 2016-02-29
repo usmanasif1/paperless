@@ -7,6 +7,7 @@ PaperLess::Application.routes.draw do
     collection do
       post 'change_role'
     end
+    resources :orders
   end
   resources :orders do 
   	collection do
@@ -18,8 +19,12 @@ PaperLess::Application.routes.draw do
         get 'files'
       end
     end
-
   end
   resources :notes
+  resources :zip_uploaders, only: [] do
+    member do
+      get 'download'
+    end
+  end
 
 end
