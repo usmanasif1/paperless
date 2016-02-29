@@ -13,5 +13,9 @@ class UserPolicy
   def update?
     @current_user.roles.where(name: ["Super Admin", "Admin"]).any?
   end
+
+  def destroy?
+    @current_user.roles.where(name: ["Super Admin", "Admin"]).any?
+  end
 end
 
