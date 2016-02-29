@@ -11,7 +11,7 @@ class ZipUploadersController < ApplicationController
 		@zip = order.zip_uploaders.build(params[:zip_uploader])
     if @zip.save
     	flash[:success]  ="successfully uploaded"
-    	redirect_to orders_path
+    	redirect_to request.referrer
     else
     	flash[:danger] = "Something went wrong."
     	redirect_to :back
