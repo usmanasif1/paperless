@@ -1,5 +1,8 @@
-<h3>Order Detail</h3>
-<%= link_to "Add Note", "javascript:void(0)", class: "btn btn-mini btn-sm btn-success pull-right open_modal", id: "#{@order.id}" if current_user.roles.where(name: ["Super Admin", "Admin"]).any? %>
+<div>
+  <strong>Order: </strong> <%= @order.name%> | <%= @order.user.email %>
+  <%= link_to_function image_tag("/assets/back.png",:border => 0), "history.back()" , class: "pull-right" %>
+</div>
+
 <table class="table table-striped">
   <thead>
     <tr>
@@ -27,34 +30,35 @@
   </tbody>
 </table>
 <div>
-<% if @admin %>
-  <% if @notes.present? %>
-    <div class="panel panel-primary">
-      <div class="panel-heading">
-        Notes
+  <% if @admin %>
+    <% if @notes.present? %>
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          Notes
+        </div>
+        <div class="panel-body">  
+          <table class="table table-striped">
+            <thead>
+              <th>Posted By</th>
+              <th>Message</th>
+            </thead>
+            <tbody>
+              <% @notes.each do |note| %>
+                <tr>
+                  <td style="width:16%;background-color: lightgray;"><%= note.user.username %>: </td>
+                  <td><%= note.message %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
       </div>
-      <div class="panel-body">  
-        <table class="table table-striped">
-          <thead>
-            <th>Posted By</th>
-            <th>Message</th>
-          </thead>
-          <tbody>
-            <% @notes.each do |note| %>
-              <tr>
-                <td style="width:16%;background-color: lightgray;"><%= note.user.username %>: </td>
-                <td><%= note.message %></td>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  <% else %>
-    <p class="flash-msg">No Message Found.</p>
+    <% else %>
+      <p class="flash-msg">No Message Found.</p>
+    <% end %>
   <% end %>
-<% end %>
 </div>
+<%= link_to "Add Note", "javascript:void(0)", class: "btn btn-mini btn-sm btn-success pull-right open_modal", id: "#{@order.id}" if current_user.roles.where(name: ["Super Admin", "Admin"]).any? %>
 <div class="clearfooter"></div>
 </div>
 <%= render "shared/popup" %>

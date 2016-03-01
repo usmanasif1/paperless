@@ -1,5 +1,6 @@
 <div>
   <strong>User:</strong> <%= user.username %> | <%= user.email %>
+  <%= link_to_function image_tag("/assets/back.png",:border => 0), "history.back()" , class: "pull-right" %>
 </div>
 <br/>
 <% if orders.present? %>

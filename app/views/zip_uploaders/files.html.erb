@@ -1,4 +1,7 @@
-<div><strong>Order: </strong> <%= @order.name%></div>
+<div>
+  <strong>Order: </strong> <%= @order.name%> | <%= @order.user.email %>
+  <%= link_to_function image_tag("/assets/back.png",:border => 0), "history.back()" , class: "pull-right" %>
+</div>
 <br/>
 <% if @files.present? %>
     <div class="panel panel-primary">
@@ -17,11 +20,13 @@
                 <td><%= file.zip_identifier %></td>
                 <% ext = File.extname(file.zip_identifier) %>
                 <td>
-                  <%# if ext != ".zip" %>
-                    <!-- <a href='<%#= "#{file.zip_url}" %>' class="btn btn-sm btn-mini btn-success">view</a> -->
-                  <%# end %>
-                  <a href='<%= "#{file.zip_url}" %>' class="btn btn-sm btn-mini btn-primary">download</a>
-                  <%#= link_to "download", download_zip_uploader_path(file), class: "btn btn-sm btn-mini btn-primary"%>
+                  <% if ext != ".zip" %>
+                     <a href='<%= "#{file.zip_url}" %>' target="_blank" class="btn btn-sm btn-mini btn-success">view</a>
+                    <%= link_to "download", download_zip_uploader_path(file), class: "btn btn-sm btn-mini btn-primary"%>
+                  <% else %>
+                    <a href='<%= "#{file.zip_url}" %>' class="btn btn-sm btn-mini btn-primary">download</a>
+                  <% end %>
+                  
                 </td>
               </tr>
             <% end %>

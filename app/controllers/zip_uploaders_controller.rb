@@ -23,9 +23,10 @@ class ZipUploadersController < ApplicationController
 		@files  = @order.zip_uploaders
 	end
 
-	# def download
-	# 	file = ZipUploader.find(params[:id])
-	# 	send_file file.zip_url
-	# 	redirect_to request.referrer
-	# end
+	def download
+		file = ZipUploader.find(params[:id])
+		url = file.zip.url
+		data = open(url).read
+		send_data data, :disposition => 'attachment', :filename=> "#{file.zip_identifier}"
+	end
 end
