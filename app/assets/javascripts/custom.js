@@ -11,30 +11,39 @@ $(document).ready(function(){
 
   $(".move-folder-file").click(function(){
     $("#move_file_id").val($(this).attr('id'));
+    name_string = $(this).attr('name'); 
+    $("#name_of_moving_item").html('');
+    $("#name_of_moving_item").html('<strong>'+ name_string +'</strong>');
     str = $(this).attr('id');
     arr = str.split('-');
     $.ajax({
       type: 'get',
       url: '/folders/get_folder_list',
       dataType:'JSON',
+      data: {
+        'type' : arr[1],
+        'id' : arr[0]
+      },
       success:function(data){
         //clear the current content of the select
-        console.log(data);
         $select = $("#user_folders_select");
-        console.log(data);
         $select.html('');
         $select.html('<option></option>');
         //iterate over the data and append a select option
         if(arr[1] == 'folder')
         {
-          $.each(data, function(key, val){
+          if(data["parent"] != null)
+          {
+            $select.append('<option value="' + data["parent"].id + '" name="' + data["parent"].id + '" >' + data["parent"].name + '</option>');
+          } 
+          $.each(data["folders"], function(key, val){
             if(val.id != arr[0])
             {
               $select.append('<option value="' + val.id + '" name="' + val.id + '" >' + val.name + '</option>');
             }
           })
         }else{
-          $.each(data, function(key, val){
+          $.each(data["folders"], function(key, val){
             $select.append('<option value="' + val.id + '" name="' + val.id + '" >' + val.name + '</option>');
           })
         }

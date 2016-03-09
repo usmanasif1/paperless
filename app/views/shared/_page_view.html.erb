@@ -25,9 +25,10 @@
               </td>
               <td>
                 <%= link_to image_tag('edit.png', :alt => "edit"), edit_folder_path(folder), :title => "edit" %>&nbsp;
-
-                <%= link_to image_tag('move.png', :alt => "Move Folder"), "javascript:void(0)", :title => "Move Folder" , id: "#{folder.id}-folder" , class: "move-folder-file"%>&nbsp;
-
+                <% if current_user && current_user.roles.where(name: ["Super Admin", "Admin"]).any? %>
+                <% else %>
+                  <%= link_to image_tag('move.png', :alt => "Move Folder"), "javascript:void(0)", :title => "Move Folder", name: "#{folder.name}" , id: "#{folder.id}-folder" , class: "move-folder-file"%>&nbsp;
+                <% end %>
                 <%= link_to image_tag('delete.png', :alt => "delete"), folder, :method => :delete, :data => { :confirm => "Are you sure?" }, :title => "delete item" %>
               </td>
             </tr>
@@ -56,7 +57,10 @@
               <td><%= l file.updated_at, format: :short %></td>
               <td>
                 <% if ext != ".zip" %>
-                  <%= link_to image_tag('move.png', :alt => "Move File"), "javascript:void(0)", :title => "Move File" , id: "#{file.id}-file", class: "move-folder-file" %>&nbsp; |
+                  <% if current_user && current_user.roles.where(name: ["Super Admin", "Admin"]).any? %>
+                  <% else %>
+                    <%= link_to image_tag('move.png', :alt => "Move File"), "javascript:void(0)", :title => "Move File" , name: "#{file.zip_identifier}", id: "#{file.id}-file", class: "move-folder-file" %>&nbsp; |
+                  <% end %>
                   <a href='<%= "#{file.zip_url}" %>' target="_blank" >view</a> &nbsp;
                   <%= link_to "download", download_zip_uploader_path(file) %>
                 <% else %>

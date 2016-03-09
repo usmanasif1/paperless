@@ -89,8 +89,21 @@ class FoldersController < ApplicationController
 	end
 
 	def get_folder_list
-		folders = current_user.folders.where("parent_id IS NOT NULL")
-		return render json: folders
+		folder_array = []
+		if params[:type] == 'file'
+			folders = current_user.folders.where("parent_id IS NOT NULL")
+			folder_array << folders
+		else
+			folder = Folder.find(params[:id])
+			parent = Folder.find(folder.parent_id)
+			if parent.parent_id.present?
+				parent_of_parent = Folder.find(parent.parent_id)
+			end
+			folders = Folder.where(parent_id: folder.parent_id)
+			# folder_array << parent
+			folder_array << folders
+		end	
+		return render json: {folders: folders, parent: parent_of_parent}
 	end
 
 	def move_folder
