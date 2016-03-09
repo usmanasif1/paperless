@@ -1,0 +1,20 @@
+<div class="modal fade" id="move_modal" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Move File/Folder</h4>
+      </div>
+      <%= form_tag(move_folder_folders_path ,method: :post,class: "form-horizontal")  do %>
+        <%= hidden_field_tag :move_file_id %>
+        <div class="modal-body">
+          <select id="user_folders_select" name="move_to"></select>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <%= submit_tag 'Save', class: 'btn btn-primary' %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -1,13 +1,12 @@
 <%#= link_to "PaperLess", root_url, :class => 'brand' %>
   <% if user_signed_in? %>
     <ul class="nav navbar-nav">
-      <li>
-        <% if current_user && current_user.roles.where(name: ["Super Admin", "Admin"]).any? %>
-          <%= link_to 'users', users_path %>
-        <% else %>
-          <%= link_to 'Orders', orders_path %>
-        <% end %>
-      </li>
+      <% if current_user && current_user.roles.where(name: ["Super Admin", "Admin"]).any? %>
+        <li><%= link_to 'users', users_path %></li>
+      <% else %>
+        <li><%= link_to 'Orders', orders_path %></li>
+        <li><%= link_to 'Folders', folders_path %></li>
+      <% end %>
     </ul>
     <ul class="nav navbar-nav navbar-right">
       <li>

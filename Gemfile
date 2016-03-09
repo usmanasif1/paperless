@@ -9,6 +9,8 @@ gem 'will_paginate', '~> 3.0.5'
 gem 'pundit'
 gem 'delayed_job_active_record'
 gem 'rubyzip', '>= 1.1.0' # will load new rubyzip version
+# gem 'jstree-rails', :git => 'git://github.com/tristanm/jstree-rails.git'
+gem 'jstree-rails-4'
 # gem 'test-unit'
 group :production do
    gem 'pg'

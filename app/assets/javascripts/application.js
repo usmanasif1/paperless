@@ -15,4 +15,5 @@
 //= require bootstrap
 //= require custom
 //= require jquery.dataTables
+//= require jstree
 

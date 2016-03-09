@@ -13,7 +13,12 @@ class Devise::RegistrationsController < DeviseController
   # POST /resource
   def create
     build_resource(sign_up_params)
-
+    # Create root folder for this resource
+    # folder = Folder.create!(name: "Root folder")
+    folder = resource.folders.build
+    folder.name = "Root folder"
+    folder.save!
+    # resource.folder_id = folder.id
     resource.save
     role = resource.user_roles.build
     role.role_id = Role.find_by_name('User').id

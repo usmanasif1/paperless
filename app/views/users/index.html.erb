@@ -16,13 +16,14 @@
       <tbody>
         <% @users.each do |user| %>
           <tr>
-            <td><%= link_to user.username, user_orders_path(user) %></td>
+            <td><%= link_to user.username, folders_path({user_id: user}) %></td>
             <td><%= user.email %></td>
             <td><%= user.created_at.to_date %></td>
             <td><%= user.roles.first.name.titleize unless user.roles.first.nil? %></td>
             <td>
               <a data-toggle="modal" href="#role-options-<%= user.id %>" class="btn btn-mini" type="button">Change role</a>
               <%= render user %>
+              <%= link_to "Orders", user_orders_path(user) %>
               <% if !user.roles.where(name: ["Super Admin", "Admin"]).any? %> 
                 <%= link_to("Delete user", user_path(user), :data => { :confirm => "Are you sure?" }, :method => :delete, :class => 'btn btn-mini') %>
               <% end %>

@@ -7,8 +7,20 @@ class ZipUploadersController < ApplicationController
 	end
 
 	def create
-		order  = Order.find(params[:order_id])
-		@zip = order.zip_uploaders.build(params[:zip_uploader])
+		# order  = Order.find(params[:order_id])
+		# @zip = order.zip_uploaders.build(params[:zip_uploader])
+  #   if @zip.save
+  #   	flash[:success]  ="successfully uploaded"
+  #   	redirect_to request.referrer
+  #   else
+  #   	flash[:danger] = "Something went wrong."
+  #   	redirect_to :back
+  #   end
+
+
+  # following code integratde with folder
+		folder  = Folder.find(params[:folder_id])
+		@zip = folder.zip_uploaders.build(params[:zip_uploader])
     if @zip.save
     	flash[:success]  ="successfully uploaded"
     	redirect_to request.referrer
@@ -16,6 +28,8 @@ class ZipUploadersController < ApplicationController
     	flash[:danger] = "Something went wrong."
     	redirect_to :back
     end
+
+
 	end
 
 	def files

@@ -14,7 +14,8 @@ class ZipFileUploader < CarrierWave::Uploader::Base
   def store_dir
     # puts "888"*90
     # puts model.order.user.email
-    str = model.order.user.email + 'zaqxswcdevfrbgt'
+    # str = model.folder.user.email + 'zaqxswcdevfrbgt'
+    str = model.folder.user.email
     str = Base64.encode64(str)
     # "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
     "uploads/#{str}/#{model.id}"

@@ -1,0 +1,14 @@
+<% content_for :title, "New folder" -%>
+
+<h1><%= content_for :title %></h1>
+<%= form_for @folder do |f| %>
+  <%#= f.error_messages %>
+	<p>
+	  <%= f.label :name %>:<br>
+	  <%= f.text_field :name, { :class => 'text_input' } %>
+	</p>
+	<p>
+	  <%= f.submit "Save" %>
+	  <%#= link_to t(:back), @folder.parent %>
+	</p>
+<% end %>

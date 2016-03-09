@@ -1,5 +1,6 @@
 <div>
-<%= link_to "Create Order",new_order_path, class: "btn btn-success btn-mini btn-sm pull-right"%></div>
+<%= link_to "Create Order",new_order_path, class: "btn btn-success btn-mini btn-sm pull-right"%>
+</div>
 <br/><br/>
 <% if orders.present? %>
   <div class="panel panel-primary">
@@ -29,7 +30,7 @@
             <td><%= order.to_date %></td>
             <td><%= order.try(:zip_uploaders).try(:count) %></td>
             <td>
-              <%= link_to "View files", files_order_zip_uploaders_path(order), class: "btn btn-sm btn-mini btn-primary"%>
+              <%#= link_to "View files", files_order_zip_uploaders_path(order), class: "btn btn-sm btn-mini btn-primary"%>
               <%= link_to 'Edit', edit_order_path(order), class: "btn btn-mini btn-sm btn-primary"%>
               <%= link_to("Delete order", order_path(order), :data => { :confirm => "Are you sure?" }, :method => :delete, :class => 'btn btn-mini btn-sm btn-danger disabled') %>
             </td>
@@ -38,7 +39,7 @@
         </tbody>
       </table>    
     </div>
-  </div>>
+  </div>
 <% else %>
  <p class="flash-msg">No Order Found.<%= link_to "Click Here to post", new_order_path%></p>
 <% end %>

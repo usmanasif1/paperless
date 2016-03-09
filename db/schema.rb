@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160226081112) do
+ActiveRecord::Schema.define(:version => 20160303065544) do
 
   create_table "delayed_jobs", :force => true do |t|
     t.integer  "priority",   :default => 0, :null => false
@@ -28,6 +28,14 @@ ActiveRecord::Schema.define(:version => 20160226081112) do
   end
 
   add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
+
+  create_table "folders", :force => true do |t|
+    t.string   "name"
+    t.integer  "parent_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.integer  "user_id"
+  end
 
   create_table "notes", :force => true do |t|
     t.text     "message"
@@ -76,6 +84,7 @@ ActiveRecord::Schema.define(:version => 20160226081112) do
     t.datetime "created_at",                             :null => false
     t.datetime "updated_at",                             :null => false
     t.string   "phone"
+    t.integer  "folder_id"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
@@ -86,6 +95,7 @@ ActiveRecord::Schema.define(:version => 20160226081112) do
     t.integer  "order_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.integer  "folder_id"
   end
 
 end

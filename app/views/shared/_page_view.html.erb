@@ -1,0 +1,74 @@
+<%= hidden_field_tag :root_folder_id, @root_folder.id %>
+<div class="col-sm-8">
+    <p>
+      <span class="folder_menu"><%= image_tag('folder_add.png', :alt => "create_a_new_folder") %> <%= link_to "create a new folder", new_folder_folder_path(@folder) %></span>
+
+      <span class="folder_menu"><%= image_tag('file_add.png', :alt => "upload_a_file") %> <%= link_to "upload a file", "javascript:void(0)", class: "open_modal_upload_file", id: "#{@folder.id}" %></span>
+    </p>
+
+    <div id="files_and_folders">
+      <table class="table table-stripped">
+        <thead>
+          <th>Name</th>
+          <th>Modified</th>
+          <th>Action</th>
+        </thead>
+        <tbody>
+          <% @folders.each do |folder| -%>
+            <tr>
+              <td>
+                <%= image_tag('folder.png') %>
+                <%= link_to folder.name, folder %>
+              </td>
+              <td class="file_modified">
+                <%= l folder.updated_at, :format => :short %>
+              </td>
+              <td>
+                <%= link_to image_tag('edit.png', :alt => "edit"), edit_folder_path(folder), :title => "edit" %>&nbsp;
+
+                <%= link_to image_tag('move.png', :alt => "Move Folder"), "javascript:void(0)", :title => "Move Folder" , id: "#{folder.id}-folder" , class: "move-folder-file"%>&nbsp;
+
+                <%= link_to image_tag('delete.png', :alt => "delete"), folder, :method => :delete, :data => { :confirm => "Are you sure?" }, :title => "delete item" %>
+              </td>
+            </tr>
+          <% end -%>
+
+          <!-- Here are the files in the root table -->
+          <% @folder.zip_uploaders.each do |file| -%>
+            <tr>
+              <% ext = File.extname(file.zip_identifier) %>
+              <td>
+                <% if ext == '.zip'%>
+                  <%= image_tag('zip.png')%>
+                <% elsif ext == '.png' || ext == 'jpg' || ext == 'jpeg'%>
+                  <%= image_tag('png.png')%>
+                <% elsif ext == '.pdf' %>
+                  <%= image_tag('pdf.png')%>
+                <% elsif ext == '.tar'%>
+                  <%= image_tag('tar.png')%>
+                <% elsif ext == '.xls'%>
+                  <%= image_tag('xls.png')%>
+                <% else %>
+                  <%= image_tag('file.png')%>
+                <% end %>
+                <%= file.zip_identifier %>
+              </td>
+              <td><%= l file.updated_at, format: :short %></td>
+              <td>
+                <% if ext != ".zip" %>
+                  <%= link_to image_tag('move.png', :alt => "Move File"), "javascript:void(0)", :title => "Move File" , id: "#{file.id}-file", class: "move-folder-file" %>&nbsp; |
+                  <a href='<%= "#{file.zip_url}" %>' target="_blank" >view</a> &nbsp;
+                  <%= link_to "download", download_zip_uploader_path(file) %>
+                <% else %>
+                  <a href='<%= "#{file.zip_url}" %>'>download</a>
+                <% end %>
+              </td>
+            </tr>
+          <% end -%>
+        </tbody>
+      </table>
+    </div>
+</div>
+
+<%= render "shared/upload_file_popup" %>
+<%= render "shared/move_folder" %>

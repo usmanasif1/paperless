@@ -1,0 +1,19 @@
+<% content_for :title, @folder.name -%> 
+
+<h1><%= content_for :title %></h1>
+<% unless @folder.is_root? -%>
+  <p>
+    <%= breadcrumbs(@folder) %>
+    <span class="breadcrumb nowrap"><%= @folder.name %></span>
+  </p>
+<% end -%>
+
+<div class="row">
+  <div class="col-sm-3">
+    <div id="tree-my">
+    </div>
+  </div>
+  <div id="main-div-data">
+    <%= render "shared/page_view" %>
+  </div>  
+</div>

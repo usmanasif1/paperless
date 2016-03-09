@@ -8,7 +8,24 @@ PaperLess::Application.routes.draw do
       post 'change_role'
     end
     resources :orders
+    
+    resources :folders
   end
+
+  resources :folders, :shallow => true, :except => [:new, :create] do
+    collection do 
+      get 'get_folders'
+      get 'get_html'
+      get 'get_folder_list'
+      post 'move_folder'
+    end
+    resources :folders, :only => [:new, :create]
+    resources :files, :only => [:new, :create]
+    resources :zip_uploaders
+  end
+
+
+  
   resources :orders do 
   	collection do
   		post 'guest_order'
